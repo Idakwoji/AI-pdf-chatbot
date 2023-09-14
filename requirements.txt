@@ -1,0 +1,5 @@
+PyPDF2
+pytesseract
+pdf2image
+fastapi
+decouple
