@@ -2,5 +2,5 @@ PyPDF2
 pytesseract
 pdf2image
 fastapi
-python-decouple == 3.11
+python-decouple == 3.8
 uvicorn
