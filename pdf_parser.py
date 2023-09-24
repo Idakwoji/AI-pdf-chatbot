@@ -1,10 +1,10 @@
 import PyPDF2
 import pytesseract
 from pdf2image import convert_from_path
-from decouple import config
+from decouple import AutoConfig
 from fastapi import FastAPI
 app = FastAPI()
-tesseract_path = config("TESSERACT_PATH")
+tesseract_path = AutoConfig("TESSERACT_PATH")
 def extract_pdf_txt(file_name: str):
     with open(file_name, "rb") as file_handle:
         reader = PyPDF2.PdfReader(file_handle, strict = False)
