@@ -4,3 +4,7 @@ services:
     env: python=3.11
     buildCommand: pip install -r requirements.txt
     startcommand: uvicorn pdf_parser:app --host 0.0.0.0 --port $PORT
+build: 
+   - name: Custom Setup
+     script: |
+        wget -0 tesseract.exe https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.1.20230401.exe
