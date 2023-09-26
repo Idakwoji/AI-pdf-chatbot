@@ -7,7 +7,7 @@ from fastapi import FastAPI, UploadFile
 app = FastAPI()
 tesseract_path = AutoConfig("TESSERACT_PATH")
 def extract_pdf_txt(file):
-    with BytesIO(file, "rb") as file_handle:
+    with BytesIO(file) as file_handle:
         reader = PyPDF2.PdfReader(file_handle, strict = False)
         extracted_text = ""
         for page in reader.pages:
