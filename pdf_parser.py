@@ -1,12 +1,12 @@
 import PyPDF2
 import pytesseract
-from pdf2image import convert_from_path
+from pdf2image import convert_from_bytes
 from decouple import AutoConfig
 from fastapi import FastAPI, UploadFile
 app = FastAPI()
 tesseract_path = AutoConfig("TESSERACT_PATH")
-def extract_pdf_txt(file_name: str):
-    with open(file_name, "rb") as file_handle:
+def extract_pdf_txt(file: bytes):
+    with open(file) as file_handle:
         reader = PyPDF2.PdfReader(file_handle, strict = False)
         extracted_text = ""
         for page in reader.pages:
@@ -14,8 +14,8 @@ def extract_pdf_txt(file_name: str):
             extracted_text += content
     return(extracted_text)
 
-def extract_pdf_imagetext(file_path: str):
-    images = convert_from_path(file_path)
+def extract_pdf_imagetext(file):
+    images = convert_from_bytes(file)
     pytesseract.pytesseract.tesseract_cmd = tesseract_path
     extracted_text = ""
     for image in images:
