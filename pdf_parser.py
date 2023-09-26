@@ -14,7 +14,7 @@ def extract_pdf_txt(file: bytes):
             extracted_text += content
     return(extracted_text)
 
-def extract_pdf_imagetext(file):
+def extract_pdf_imagetext(file: bytes):
     images = convert_from_bytes(file)
     pytesseract.pytesseract.tesseract_cmd = tesseract_path
     extracted_text = ""
