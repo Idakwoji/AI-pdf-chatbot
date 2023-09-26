@@ -30,10 +30,13 @@ async def extract_pdf(pdf_file: UploadFile):
     pdf_content = await pdf_file.read()
     try:
         the_text = extract_pdf_txt(pdf_content)
-        if the_text == "":
+        if not the_text.strip():
             the_text = extract_pdf_imagetext(pdf_content)
+        if not the_text.strip():
+            raise Exception("No text could be extracted from the PDF")
         return the_text
-    except Exception:
+    except Exception as e:
+        print(f"Exception: {str(e)}")
         return("Invalid file format: Please upload a valid text-based or image-based pdf file")
     
     
