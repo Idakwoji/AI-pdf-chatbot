@@ -5,7 +5,8 @@ from io import BytesIO
 from decouple import AutoConfig
 from fastapi import FastAPI, UploadFile
 app = FastAPI()
-tesseract_path = AutoConfig("TESSERACT_PATH")
+config = AutoConfig()
+tesseract_path = config("TESSERACT_PATH")
 def extract_pdf_txt(file):
     with BytesIO(file) as file_handle:
         reader = PyPDF2.PdfReader(file_handle, strict = False)
