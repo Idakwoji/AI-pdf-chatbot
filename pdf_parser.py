@@ -2,10 +2,9 @@ import PyPDF2
 import pytesseract
 from pdf2image import convert_from_path
 from decouple import AutoConfig
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile
 app = FastAPI()
-config = AutoConfig()
-tesseract_path = config("TESSERACT_PATH")
+tesseract_path = AutoConfig("TESSERACT_PATH")
 def extract_pdf_txt(file_name: str):
     with open(file_name, "rb") as file_handle:
         reader = PyPDF2.PdfReader(file_handle, strict = False)
@@ -24,10 +23,11 @@ def extract_pdf_imagetext(file_path: str):
         extracted_text += text
     return(extracted_text)
 
-@app.post("/Extract_pdf/")
-async def extract_pdf(pdf_content: bytes):
-    if pdf_content is None:
+@app.post("/upload_pdf/")
+async def extract_pdf(pdf_file: UploadFile):
+    if pdf_file is None:
         return ("Error: No PDF file uploaded")
+    pdf_content = await pdf_file.read()
     try:
         the_text = extract_pdf_txt(pdf_content)
         if the_text == "":
@@ -35,4 +35,5 @@ async def extract_pdf(pdf_content: bytes):
         return the_text
     except Exception:
         return("Invalid file format: Please upload a valid text-based or image-based pdf file")
+    
     
