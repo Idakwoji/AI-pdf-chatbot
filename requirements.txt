@@ -4,3 +4,4 @@ pdf2image
 fastapi
 python-decouple == 3.8
 uvicorn
+python-multipart
