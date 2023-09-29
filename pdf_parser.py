@@ -10,7 +10,7 @@ app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 #handling environmental variables
 config = AutoConfig()
-tesseract_path = config("TESSERACT_PATH")
+tesseract_path = config("TESSERACT_PATH", default="tesseract")
 #define functions
 def extract_pdf_txt(file):
     with BytesIO(file) as file_handle:
