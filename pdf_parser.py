@@ -4,9 +4,14 @@ from pdf2image import convert_from_bytes
 from io import BytesIO
 from decouple import AutoConfig
 from fastapi import FastAPI, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
+#Allow all origins, methods and headers in order to handle the front-end CORS errors
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+#handling environmental variables
 config = AutoConfig()
 tesseract_path = config("TESSERACT_PATH")
+#define functions
 def extract_pdf_txt(file):
     with BytesIO(file) as file_handle:
         reader = PyPDF2.PdfReader(file_handle, strict = False)
@@ -24,7 +29,7 @@ def extract_pdf_imagetext(file):
         text = pytesseract.image_to_string(image)
         extracted_text += text
     return(extracted_text)
-
+#define end point
 @app.post("/upload_pdf/")
 async def extract_pdf(pdf_file: UploadFile):
     if pdf_file is None:
