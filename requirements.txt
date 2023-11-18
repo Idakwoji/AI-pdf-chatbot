@@ -5,3 +5,7 @@ fastapi
 python-decouple == 3.8
 uvicorn
 python-multipart
+cachetools
+uuid
+requests
+pydantic
